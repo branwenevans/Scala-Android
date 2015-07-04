@@ -17,7 +17,7 @@ class MainActivity extends Activity {
     setContentView(R.layout.activity_main)
 
     val layoutManager = new GridLayoutManager(getBaseContext, 2)
-    val adapter = new CountdownAdapter(dataset)
+    val adapter = new ListAdapter(dataset)
 
     val view = findViewById(R.id.recycler_view).asInstanceOf[RecyclerView]
     view.setHasFixedSize(true)

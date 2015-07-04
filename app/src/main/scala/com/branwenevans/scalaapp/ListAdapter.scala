@@ -6,7 +6,7 @@ import android.widget.TextView
 
 import scala.collection.mutable
 
-class CountdownAdapter(dataset: mutable.MutableList[String]) extends RecyclerView.Adapter[ViewHolder] {
+class ListAdapter(dataset: mutable.MutableList[String]) extends RecyclerView.Adapter[ViewHolder] {
 
   override def getItemCount: Int = dataset.size
 
@@ -22,5 +22,5 @@ class CountdownAdapter(dataset: mutable.MutableList[String]) extends RecyclerVie
 }
 
 class ViewHolder(itemView: View) extends RecyclerView.ViewHolder(itemView) {
-  val textView: TextView = itemView.findViewById(R.id.grid_item).asInstanceOf[TextView]
+  val textView: TextView = itemView.findViewById(R.id.item_text).asInstanceOf[TextView]
 }
