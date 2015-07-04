@@ -6,21 +6,30 @@ import android.widget.TextView
 
 import scala.collection.mutable
 
-class ListAdapter(dataset: mutable.MutableList[String]) extends RecyclerView.Adapter[ViewHolder] {
+class ListAdapter(dataset: mutable.MutableList[Weather]) extends RecyclerView.Adapter[ViewHolder] {
 
   override def getItemCount: Int = dataset.size
 
   override def onBindViewHolder(vh: ViewHolder, i: Int) {
     val viewHolder = vh.asInstanceOf[ViewHolder]
-    viewHolder.textView.setText(dataset.get(i).get)
+    val weather: Weather = dataset.get(0).get
+    viewHolder.temperature.setText(weather.temp.toString)
+    viewHolder.description.setText(weather.description)
+    viewHolder.high.setText(weather.maxTemp.toString)
+    viewHolder.low.setText(weather.minTemp.toString)
+    viewHolder.date.setText(weather.date.toString)
   }
 
   override def onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder = {
-    new ViewHolder(LayoutInflater.from(viewGroup.getContext).inflate(R.layout.grid_item, viewGroup, false))
+    new ViewHolder(LayoutInflater.from(viewGroup.getContext).inflate(R.layout.weather_item, viewGroup, false))
   }
 
 }
 
 class ViewHolder(itemView: View) extends RecyclerView.ViewHolder(itemView) {
-  val textView: TextView = itemView.findViewById(R.id.item_text).asInstanceOf[TextView]
+  val temperature: TextView = itemView.findViewById(R.id.weather_temp).asInstanceOf[TextView]
+  val description: TextView = itemView.findViewById(R.id.weather_description).asInstanceOf[TextView]
+  val high: TextView = itemView.findViewById(R.id.weather_high).asInstanceOf[TextView]
+  val low: TextView = itemView.findViewById(R.id.weather_low).asInstanceOf[TextView]
+  val date: TextView = itemView.findViewById(R.id.weather_date).asInstanceOf[TextView]
 }
