@@ -55,5 +55,5 @@ object WeatherLoader {
 }
 
 class Weather(private val timestamp: Long, val heading: String, val description: String, val code: Int, val temp: Long, val minTemp: Long, val maxTemp: Long) {
-  val date = new SimpleDateFormat("yyyy-MM-dd").format(new Date(timestamp * 1000))
+  val date = if(DateUtils.isToday(timestamp * 1000)) "Today" else new SimpleDateFormat("EEEE yyyy-MM-dd").format(new Date(timestamp * 1000))
 }
