@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Scala Weather</string>
-    <string name="title_activity_main">Weather Forecast</string>
+    <string name="title_activity_main"></string>
     <string name="action_settings">Settings</string>
 </resources>
