@@ -1,76 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingLeft="@dimen/activity_vertical_margin"
-    android:paddingRight="@dimen/activity_vertical_margin"
-    android:background="@drawable/weather_item_background"
-    android:elevation="10dp">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/weather_temp"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="10°"
-        android:padding="15dp"
-        android:textSize="18sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        card_view:cardBackgroundColor="@color/cardview_dark_background"
+        card_view:cardCornerRadius="@dimen/cardview_default_radius"
+        card_view:cardElevation="2dp"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/weather_temp"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:hint="10°"
+                android:padding="15dp"
+                android:textSize="18sp" />
 
 
-    <TextView
-        android:id="@+id/weather_heading"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:hint="Cloudy"
-        android:padding="15dp"
-        android:textSize="18sp"
-        android:minWidth="150dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+            <TextView
+                android:id="@+id/weather_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:hint="Cloudy"
+                android:minWidth="150dp"
+                android:padding="15dp"
+                android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/weather_description"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:hint="scattered clouds"
-        android:padding="15dp"
-        android:textSize="14sp"
-        android:minWidth="150dp"
-        android:layout_alignTop="@+id/weather_date"
-        android:layout_alignParentStart="true" />
-
-
-    <TextView
-        android:id="@+id/weather_high"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:hint="18°"
-        android:padding="15dp"
-        android:textSize="12sp"
-        android:layout_alignBottom="@+id/weather_temp"
-        android:layout_toEndOf="@+id/weather_temp" />
-
-    <TextView
-        android:id="@+id/weather_low"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:hint="4°"
-        android:padding="15dp"
-        android:textSize="12sp"
-        android:layout_alignTop="@+id/weather_high"
-        android:layout_toEndOf="@+id/weather_high" />
+            <TextView
+                android:id="@+id/weather_description"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/weather_heading"
+                android:hint="scattered clouds"
+                android:minWidth="150dp"
+                android:padding="15dp"
+                android:textSize="14sp" />
 
 
-    <TextView
-        android:id="@+id/weather_date"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:hint="04/07/2015"
-        android:padding="15dp"
-        android:textSize="12sp"
-        android:layout_below="@+id/weather_temp"
-        android:layout_toEndOf="@+id/weather_temp" />
+            <TextView
+                android:id="@+id/weather_high"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignEnd="@+id/weather_temp"
+                android:layout_centerVertical="true"
+                android:hint="18°"
+                android:padding="15dp"
+                android:textSize="12sp" />
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/weather_low"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignStart="@+id/weather_temp"
+                android:layout_centerVertical="true"
+                android:hint="4°"
+                android:padding="15dp"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/weather_date"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@+id/weather_high"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/weather_temp"
+                android:gravity="center"
+                android:hint="04/07/2015"
+                android:minWidth="150dp"
+                android:padding="15dp"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
+
+

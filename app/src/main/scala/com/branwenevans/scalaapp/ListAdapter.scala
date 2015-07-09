@@ -13,11 +13,16 @@ class ListAdapter(dataset: mutable.MutableList[Weather]) extends RecyclerView.Ad
   override def onBindViewHolder(vh: ViewHolder, i: Int) {
     val viewHolder = vh.asInstanceOf[ViewHolder]
     val weather: Weather = dataset.get(i).get
-    viewHolder.temperature.setText(weather.temp.toString)
+
+    viewHolder.heading.setText(weather.heading)
     viewHolder.description.setText(weather.description)
-    viewHolder.high.setText(weather.maxTemp.toString)
-    viewHolder.low.setText(weather.minTemp.toString)
+
     viewHolder.date.setText(weather.date)
+
+    val degrees: Char = '\u00B0'
+    viewHolder.temperature.setText(weather.temp.toString + degrees)
+    viewHolder.high.setText(weather.maxTemp.toString + degrees)
+    viewHolder.low.setText(weather.minTemp.toString + degrees)
   }
 
   override def onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder = {

@@ -5,7 +5,7 @@ import java.net.{HttpURLConnection, URL}
 import java.text.SimpleDateFormat
 import java.util.Date
 
-import org.json.JSONObject
+import org.json.{JSONArray, JSONObject}
 
 import scala.collection.mutable
 import scala.io.Source
@@ -16,41 +16,42 @@ object WeatherLoader {
 
   val UNITS = "&units=metric"
 
-  val DAYS = "&cnt=7"
+  val DAYS = "&cnt="
 
-  def getWeather(location: String): mutable.MutableList[Weather] = {
-    parseWeatherJson(getWeatherJson(location))
+  val DAYS_PARAM = "7"
+
+  def getWeather(location: String, days: Int): mutable.MutableList[Weather] = {
+    parseWeatherJson(getWeatherJson(location, days))
   }
 
-  def getWeatherJson(location: String): String = {
-    val connection = new URL(URL + location + UNITS + DAYS).openConnection().asInstanceOf[HttpURLConnection]
+  def getWeatherJson(location: String, days: Int): String = {
+    val connection = new URL(URL + location + UNITS + DAYS + days).openConnection().asInstanceOf[HttpURLConnection]
+    var stream: InputStream = null
     try {
       connection.connect()
-      val stream: InputStream = connection.getInputStream
-      val string: String = Source.fromInputStream(stream).mkString
-      stream.close()
-      return string
+      stream = connection.getInputStream
+      Source.fromInputStream(stream).mkString
     }
     finally {
+      stream.close()
       connection.disconnect()
     }
   }
 
   def parseWeatherJson(jsonString: String): mutable.MutableList[Weather] = {
-
-    val ob = new JSONObject(jsonString)
-
     val weather = mutable.MutableList[Weather]()
-
-    val json = ob.getJSONArray("list")
-    for (i <- 0 to ob.getJSONArray("list").length() - 1) {
-      val day = json.getJSONObject(i)
-      val temp = day.getJSONObject("temp")
-      val weatherNode = day.getJSONArray("weather").getJSONObject(0)
-      weather += new Weather(day.getLong("dt"), weatherNode.getString("main"), weatherNode.getString("description"), weatherNode.getInt("id"), temp.getLong("day"), temp.getLong("min"), temp.getLong("max"))
+    val json = new JSONObject(jsonString).getJSONArray("list")
+    for (i <- 0 to json.length() - 1) {
+      weather += createWeather(json.getJSONObject(i))
     }
 
     weather
+  }
+
+  def createWeather(day: JSONObject): Weather = {
+    val temp = day.getJSONObject("temp")
+    val weatherNode = day.getJSONArray("weather").getJSONObject(0)
+    new Weather(day.getLong("dt"), weatherNode.getString("main"), weatherNode.getString("description"), weatherNode.getInt("id"), temp.getLong("day"), temp.getLong("min"), temp.getLong("max"))
   }
 }
 
