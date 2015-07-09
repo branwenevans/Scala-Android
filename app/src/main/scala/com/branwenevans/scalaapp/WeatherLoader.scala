@@ -16,16 +16,14 @@ object WeatherLoader {
 
   val UNITS = "&units=metric"
 
-  val DAYS = "&cnt="
+  val DAYS = "&cnt=7"
 
-  val DAYS_PARAM = "7"
-
-  def getWeather(location: String, days: Int): mutable.MutableList[Weather] = {
-    parseWeatherJson(getWeatherJson(location, days))
+  def getWeather(location: String): mutable.MutableList[Weather] = {
+    parseWeatherJson(getWeatherJson(location))
   }
 
-  def getWeatherJson(location: String, days: Int): String = {
-    val connection = new URL(URL + location + UNITS + DAYS + days).openConnection().asInstanceOf[HttpURLConnection]
+  def getWeatherJson(location: String): String = {
+    val connection = new URL(URL + location + UNITS + DAYS).openConnection().asInstanceOf[HttpURLConnection]
     var stream: InputStream = null
     try {
       connection.connect()
