@@ -1,7 +1,6 @@
 package com.branwenevans.scalaapp
 
 import android.app.Activity
-import android.graphics.Bitmap
 import android.os.{AsyncTask, Bundle}
 import android.support.v7.widget.{LinearLayoutManager, RecyclerView}
 import android.view.View
@@ -12,7 +11,7 @@ class MainActivity extends Activity {
 
   val dataset = mutable.MutableList[Weather]()
 
-  val adapter = new ListAdapter(dataset)
+  val adapter = new WeatherListAdapter(dataset)
 
   protected override def onCreate(savedInstanceState: Bundle) {
     super.onCreate(savedInstanceState)
@@ -42,7 +41,6 @@ class MainActivity extends Activity {
     }
 
     override def onPostExecute(result: AnyRef) {
-      val view = findViewById(R.id.recycler_view).asInstanceOf[RecyclerView]
       adapter.notifyDataSetChanged()
     }
   }

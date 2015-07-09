@@ -3,8 +3,9 @@ package com.branwenevans.scalaapp
 import java.io.InputStream
 import java.net.{HttpURLConnection, URL}
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.{Calendar, Date}
 
+import android.text.format.DateUtils
 import org.json.{JSONArray, JSONObject}
 
 import scala.collection.mutable
@@ -24,15 +25,15 @@ object WeatherLoader {
 
   def getWeatherJson(location: String): String = {
     val connection = new URL(URL + location + UNITS + DAYS).openConnection().asInstanceOf[HttpURLConnection]
-    var stream: InputStream = null
+    var stream = None: Option[InputStream]
     try {
       connection.connect()
-      stream = connection.getInputStream
-      Source.fromInputStream(stream).mkString
+      stream = Some(connection.getInputStream)
+      Source.fromInputStream(stream.get).mkString
     }
     finally {
-      stream.close()
-      connection.disconnect()
+      stream.foreach(s => s.close)
+      connection.disconnect
     }
   }
 
@@ -54,5 +55,5 @@ object WeatherLoader {
 }
 
 class Weather(private val timestamp: Long, val heading: String, val description: String, val code: Int, val temp: Long, val minTemp: Long, val maxTemp: Long) {
-  val date: String = new SimpleDateFormat("yyyy-MM-dd").format(new Date(timestamp * 1000))
+  val date = new SimpleDateFormat("yyyy-MM-dd").format(new Date(timestamp * 1000))
 }

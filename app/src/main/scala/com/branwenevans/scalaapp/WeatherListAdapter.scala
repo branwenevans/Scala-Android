@@ -6,23 +6,24 @@ import android.widget.TextView
 
 import scala.collection.mutable
 
-class ListAdapter(dataset: mutable.MutableList[Weather]) extends RecyclerView.Adapter[ViewHolder] {
+class WeatherListAdapter(dataset: mutable.MutableList[Weather]) extends RecyclerView.Adapter[ViewHolder] {
+
+  val DEGREES: Char = '\u00B0'
 
   override def getItemCount: Int = dataset.size
 
   override def onBindViewHolder(vh: ViewHolder, i: Int) {
     val viewHolder = vh.asInstanceOf[ViewHolder]
-    val weather: Weather = dataset.get(i).get
 
+    val weather: Weather = dataset.get(i).get
     viewHolder.heading.setText(weather.heading)
     viewHolder.description.setText(weather.description)
 
     viewHolder.date.setText(weather.date)
 
-    val degrees: Char = '\u00B0'
-    viewHolder.temperature.setText(weather.temp.toString + degrees)
-    viewHolder.high.setText(weather.maxTemp.toString + degrees)
-    viewHolder.low.setText(weather.minTemp.toString + degrees)
+    viewHolder.temperature.setText(weather.temp.toString + DEGREES)
+    viewHolder.high.setText(weather.maxTemp.toString + DEGREES)
+    viewHolder.low.setText(weather.minTemp.toString + DEGREES)
   }
 
   override def onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder = {
