@@ -12,12 +12,12 @@ class ListAdapter(dataset: mutable.MutableList[Weather]) extends RecyclerView.Ad
 
   override def onBindViewHolder(vh: ViewHolder, i: Int) {
     val viewHolder = vh.asInstanceOf[ViewHolder]
-    val weather: Weather = dataset.get(0).get
+    val weather: Weather = dataset.get(i).get
     viewHolder.temperature.setText(weather.temp.toString)
     viewHolder.description.setText(weather.description)
     viewHolder.high.setText(weather.maxTemp.toString)
     viewHolder.low.setText(weather.minTemp.toString)
-    viewHolder.date.setText(weather.date.toString)
+    viewHolder.date.setText(weather.date)
   }
 
   override def onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder = {
@@ -27,9 +27,10 @@ class ListAdapter(dataset: mutable.MutableList[Weather]) extends RecyclerView.Ad
 }
 
 class ViewHolder(itemView: View) extends RecyclerView.ViewHolder(itemView) {
-  val temperature: TextView = itemView.findViewById(R.id.weather_temp).asInstanceOf[TextView]
-  val description: TextView = itemView.findViewById(R.id.weather_description).asInstanceOf[TextView]
-  val high: TextView = itemView.findViewById(R.id.weather_high).asInstanceOf[TextView]
-  val low: TextView = itemView.findViewById(R.id.weather_low).asInstanceOf[TextView]
-  val date: TextView = itemView.findViewById(R.id.weather_date).asInstanceOf[TextView]
+  val temperature = itemView.findViewById(R.id.weather_temp).asInstanceOf[TextView]
+  val heading = itemView.findViewById(R.id.weather_heading).asInstanceOf[TextView]
+  val description = itemView.findViewById(R.id.weather_description).asInstanceOf[TextView]
+  val high = itemView.findViewById(R.id.weather_high).asInstanceOf[TextView]
+  val low = itemView.findViewById(R.id.weather_low).asInstanceOf[TextView]
+  val date = itemView.findViewById(R.id.weather_date).asInstanceOf[TextView]
 }
