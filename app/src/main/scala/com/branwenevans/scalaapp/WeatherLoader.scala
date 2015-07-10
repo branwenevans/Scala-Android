@@ -3,10 +3,11 @@ package com.branwenevans.scalaapp
 import java.io.InputStream
 import java.net.{HttpURLConnection, URL}
 import java.text.SimpleDateFormat
-import java.util.{Calendar, Date}
+import java.util.{TimeZone, Date}
 
+import android.location.Location
 import android.text.format.DateUtils
-import org.json.{JSONArray, JSONObject}
+import org.json.JSONObject
 
 import scala.collection.mutable
 import scala.io.Source
@@ -14,17 +15,18 @@ import scala.io.Source
 object WeatherLoader {
 
   val URL = "http://api.openweathermap.org/data/2.5/forecast/daily?q="
-
+  val LAT = "lat="
+  val LNG = "&lon="
   val UNITS = "&units=metric"
-
   val DAYS = "&cnt=7"
 
-  def getWeather(location: String): mutable.MutableList[Weather] = {
+
+  def getWeather(location: Location): mutable.MutableList[Weather] = {
     parseWeatherJson(getWeatherJson(location))
   }
 
-  def getWeatherJson(location: String): String = {
-    val connection = new URL(URL + location + UNITS + DAYS).openConnection().asInstanceOf[HttpURLConnection]
+  def getWeatherJson(location: Location): String = {
+    val connection = new URL(URL + LAT + location.getLatitude + LNG + location.getLongitude + UNITS + DAYS).openConnection().asInstanceOf[HttpURLConnection]
     var stream = None: Option[InputStream]
     try {
       connection.connect()
@@ -32,8 +34,8 @@ object WeatherLoader {
       Source.fromInputStream(stream.get).mkString
     }
     finally {
-      stream.foreach(s => s.close)
-      connection.disconnect
+      stream.foreach(s => s.close())
+      connection.disconnect()
     }
   }
 
@@ -55,5 +57,7 @@ object WeatherLoader {
 }
 
 class Weather(private val timestamp: Long, val heading: String, val description: String, val code: Int, val temp: Long, val minTemp: Long, val maxTemp: Long) {
-  val date = if(DateUtils.isToday(timestamp * 1000)) "Today" else new SimpleDateFormat("EEEE yyyy-MM-dd").format(new Date(timestamp * 1000))
+  val formatter = new SimpleDateFormat("EEEE yyyy-MM-dd")
+  formatter.setTimeZone(TimeZone.getDefault)
+  val date = if (DateUtils.isToday(timestamp * 1000)) "Today" else formatter.format(new Date(timestamp * 1000))
 }

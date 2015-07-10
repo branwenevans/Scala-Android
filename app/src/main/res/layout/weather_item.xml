@@ -78,11 +78,11 @@
                 android:id="@+id/weather_date"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignBottom="@+id/weather_high"
+                android:layout_alignBottom="@+id/weather_description"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@+id/weather_temp"
                 android:gravity="center"
-                android:hint="04/07/2015"
+                android:hint="Saturday 04/07/2015"
                 android:minWidth="150dp"
                 android:padding="15dp"
                 android:textSize="14sp" />
